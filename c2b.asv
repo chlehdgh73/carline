@@ -1,0 +1,44 @@
+data='drive.avi';
+reader=VideoReader(data);
+numFrames=reader.NumberOfFrames;
+GrayAvi=VideoWriter('testing.avi','Uncompressed AVI');
+GrayAvi.FrameRate=reader.FrameRate; 
+open(GrayAvi);
+
+for i=1 : numFrames
+    imageData=read(reader,i);
+    grayData=rgb2gray(imageData);
+   %%%%%%%%%%%%%%%%%%%%%%%
+   %이미지에 필터링 작업 공간
+ %고주파 필터 라플라시안
+ %  F=fspecial('laplacian');
+ %  cf=filter2(F,grayData);%laplacian 필터
+  % imshow(cf);
+    
+  %저주파 필터 가우시안
+  f=fspecial('gaussian',[11,11],2);
+  cf=filter2(f,grayData);
+  figure,surf(1:11,1:11,f);
+  imshow(cf);
+  
+  
+  
+   %%%%%%%%%%%%%%%%%%%%%%%% 
+    
+    writeVideo(GrayAvi, grayData);
+end
+close(GrayAvi);
+
+
+
+
+
+
+
+implay('testing.avi');
+
+
+
+
+
+
