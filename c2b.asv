@@ -8,37 +8,82 @@ open(GrayAvi);
 for i=1 : numFrames
     imageData=read(reader,i);
     grayData=rgb2gray(imageData);
+    grayData=imresi
    %%%%%%%%%%%%%%%%%%%%%%%
    %이미지에 필터링 작업 공간
+   
+      %평균마스크
+  f=fspecial('average');
+  cf3=filter2(f,grayData);
+    %소벨마스크
+  f2=fspecial('sobel');
+  cf2=filter2(f2,cf3);
+  if i == 1
+  imshow(cf2/255)
+  end
+   
+ 
+
+   
+   
+   
+   
+   
+   
  %고주파 필터 라플라시안
- %  F=fspecial('laplacian');
+%   F=fspecial('laplacian');
  %  cf=filter2(F,grayData);%laplacian 필터
-  % imshow(cf);
-    
+  % 
+  % if i==100
+  %     imshow(cf);
+  % imwrite(cf/255,'라플라시안.jpg');
+   %end
   %저주파 필터 가우시안
-  f=fspecial('gaussian',[11,11],2);
-  cf=filter2(f,grayData);
-  figure,surf(1:11,1:11,f);
-  imshow(cf);
-  
-  
-  
+ % f=fspecial('gaussian',[11,11],2);
+  %cf2=filter2(f,grayData);
+   %surf(1:11,1:11,f);
+  %if i==100 
+  %imwrite(grayData,'원래.jpg');
+  %imshow(cf2/255);
+  %imwrite(cf2/255,'가우시안.jpg');
+  %end
+  %
+
+
+ 
+    %원형평균마스크
+%  f=fspecial('disk');
+ %   cf4=filter2(f,grayData);
+   
+ % if i==100 
+ % imwrite(grayData,'원래.jpg');
+  %imshow(cf3);
+ % imwrite(cf4/255,'원형평균필터 마스크.jpg');
+%end
+     %원형평균마스크
+%  f=fspecial('disk');
+ %   cf4=filter2(f,grayData);
+   
+ % if i==100 
+ % imwrite(grayData,'원래.jpg');
+  %imshow(cf3);
+ % imwrite(cf4/255,'원형평균필터 마스크.jpg');
+%end
+      %프리엣지마스크
+%  f=fspecial('disk');
+ %   cf4=filter2(f,grayData);
+   
+ % if i==100 
+ % imwrite(grayData,'원래.jpg');
+  %imshow(cf3);
+ % imwrite(cf4/255,'원형평균필터 마스크.jpg');
+%end
+ 
+
    %%%%%%%%%%%%%%%%%%%%%%%% 
-    
-    writeVideo(GrayAvi, grayData);
+    cf2=uint8(cf2);
+  writeVideo(GrayAvi, cf2);
 end
 close(GrayAvi);
 
-
-
-
-
-
-
-implay('testing.avi');
-
-
-
-
-
-
+%implay('testing.avi');
